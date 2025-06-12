@@ -9,18 +9,8 @@ Centralized repository of containers designed for Toolbox/Distrobox with batteri
 
 ## Images
 
-- `ubuntu-toolbox` - an Ubuntu base image
 - `debian-toolbox` - a Debian base image
 - `fedora-toolbox` - a Fedora base image
-- `arch-toolbox` - an Arch base image
-- `bazzite-arch` - an Arch based image that includes gaming utilities and Steam
-- `bazzite-arch-gnome` - Variation of Bazzite-arch for GNOME
-- `arch-toolbox-amdgpupro` - an Arch base image with proprietary AMD GPU drivers
-- `wolfi-toolbox` - a WolfiOS base image
-- `bluefin-cli` - a WolfiOS based image with Homebrew and a strongly opinionated default experience
-- `powershell-toolbox` - a WolfiOS based image with PowerShell and other Microsoft related tooling
-- `docker-distrobox` - an Ubuntu distrobox with Docker-CE. It will export the docker socket to the host.
-- `incus-distrobox` - an Ubuntu distrobox with Incus packages from Zabbly.
 
 It is strongly recommended that the [Ptyxis terminal](https://gitlab.gnome.org/chergert/ptyxis) be used with these toolboxes and is the default experience in both [Bazzite](https://bazzite.gg) and [Bluefin](https://projectbluefin.io).
 
@@ -44,40 +34,3 @@ Distrobox assemble enables the user to declare a setup without going through the
 
 To utilize these, place the user service file in `~/.config/systemd/user` and make sure the assemble file is in place. The ones inside the repo are set to replace the existing container of the same to behave similar to the quadlet. Again you can access `.volume` by using the name of the volume unit prepended with `systemd`.
 
-### Bluefin-CLI
-
-`bluefin-cli` is built from `wolfi-toolbox`. It contains [Homebrew](https://brew.sh/) configured out of the box. The brew state is bind mounted to a directory from your `$HOME`. Unlike the other toolboxes, `bluefin-cli` is intended for CLI applications _only_.
-
-Its primary purpose is to be **the** command line companion to Flathub-enabled systems by providing access to one of the largest command line repositories in the world via homebrew. Developer dependencies should be managed seperately via [devcontainers](https://github.com/devcontainers).
-
-The default configuration destroys and updates this container daily so that the toolbox is built from scratch.
-
-Updates to brew itself happen automatically when the container rebuilds. Brew will automatically upgrade packages as you use it. Brew's state is also volume mounted to a file in your home directory so your container is fresh but your packages remain untouched. At this time it is **strongly recommended** to maintain a backup of your brew package list via the [brew bundle](https://docs.brew.sh/Manpage#bundle-subcommand) subcommand.
-
-The [WolfiOS](https://edu.chainguard.dev/open-source/wolfi/overview/) apk package manager is preferred for fully declarative setups with [boxkit](https://github.com/ublue-os/boxkit). You can file package requests on the [WolfiOS repository](https://github.com/wolfi-dev/) for packages that you may need. We are working on a way to do this locally as well.
-
-The intended endstate of `bluefin-cli` is a fully automated declarative config managed via git using Wolfi packages for clean rebuilds daily. `brew` is used to fill out the "long tail" of existing software.
-
-Both `bluefin-cli` and `wolfi-toolbox` have Wolfi developer variants built from the Wolfi SDK image, intended for Wolfi package and image development. They include utilities such as melange, wolfictl, and apko. These images are labelled `bluefin-dx-cli` and `wolfi-dx-toolbox`.
-
-### PowerShell-Toolbox
-
-`powershell-toolbox` is based on `WolfiOS`. Its primary purpose is to be a dedicated container for Microsoft related technologies used during development. It contains [PowerShell](https://github.com/PowerShell/PowerShell), [Azure CLI](https://github.com/Azure/azure-cli) and [.NET](https://github.com/dotnet/core) (latest LTS) configured out of the box. It also includes a small selection of other useful CLI utilities to improve the overall experience.
-
-### Incus and Docker Distrobox
-
-Both `incus-distrobox` and `docker-distrobox` are designed to be run with a rootful, init distrobox. [Incus](https://linuxcontainers.org/incus/) uses packages built by [Zabbly](https://github.com/zabbly/incus). [Docker](https://www.docker.com/) uses the [convience install script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script) from Docker. Both are built from the ubuntu-toolbox built in this repo. Example distrobox-assemble files are with each of them. Both work well with a volume mount for their respective files in `/var/lib/{docker,incus}`. Both can be setup to autostart on boot with a `systemd service`. However, your user sockets for `Xorg`, `Wayland`, and `Pulseaudio` will not be setup until you login. For the `docker-distrobox` you can customize the group of the exported `docker socket` by setting an environment variable at distrobox creation time for `DOCKERGROUP`. The assemble file has more information. Both the `incus-distrobox` and `docker-distrobox` set the unix-groups. For incus, matching `incus-admin` inside the distrobox and on the host will enable you to use the `incus socket` from the host.
-
-# Stats
-
-## Star History
-
-![Alt](https://repobeats.axiom.co/api/embed/7c5f037d792c6deb1946e5bc040f64a0fc8abeab.svg "Repobeats analytics image")
-
-<a href="https://star-history.com/#ublue-os/toolboxes&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ublue-os/toolboxes&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ublue-os/toolboxes&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ublue-os/toolboxes&type=Date" />
-  </picture>
-</a>
