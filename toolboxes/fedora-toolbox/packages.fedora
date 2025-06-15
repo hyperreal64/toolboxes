@@ -3,7 +3,9 @@
 autossh
 bat
 borgmatic
+butane
 cmake
+cmark
 diff-so-fancy
 fd-find
 fzf
@@ -18,12 +20,16 @@ jq
 just
 libuuid-devel
 lsd
+ncurses-devel
 neovim
 npm
+parallel
 pipx
 python3-devel
 rustup
 starship
+tidy
 xclip
 yazi
+yt-dlp
 zellij
