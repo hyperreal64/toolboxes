@@ -1,5 +1,6 @@
 @c-development
 @development-tools
+ShellCheck
 autossh
 bat
 borgmatic
@@ -23,11 +24,14 @@ lsd
 ncurses-devel
 neovim
 npm
+nu
 parallel
 pipx
 python3-devel
 rustup
+shfmt
 starship
+tealdeer
 tidy
 xclip
 yazi
